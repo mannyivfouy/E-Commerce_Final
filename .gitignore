@@ -1,0 +1,17 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE / editor
+.vscode/
+.idea/
+
+# Git submodules config leftovers
+.gitmodules
+
+# Global logs
+*.log
+
+# Temporary system files
+*.swp
+*.tmp
