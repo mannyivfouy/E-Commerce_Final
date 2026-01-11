@@ -2,16 +2,6 @@ const Users = require("../models/users.model");
 const path = require("path");
 const fs = require("fs");
 
-// exports.uploadPhoto = (req, res) => {
-//   if (!req.file) {
-//     res.status(400).json({ message: "No File Upload" });
-//   }
-//   const userImage = `/uploads/users/${req.file.filename}`;
-//   res.status(200).json({
-//     url: userImage,
-//   });
-// };
-
 exports.getAllUsers = async (req, res) => {
   try {
     const users = await Users.find().select("-password");
@@ -49,6 +39,7 @@ exports.createUser = async (req, res) => {
       phone: req.body.phone,
       role: req.body.role,
       userImage: imagePath,
+      createDate: Date.now(),
     });
     await user.save();
     res.status(201).json({ message: "User Created", user });

@@ -9,7 +9,8 @@ const userSchema = new mongoose.Schema({
   email: { type: String, require: true },
   phone: { type: String, require: true },
   role: { type: String, require: true },
-  userImage: { type: String, default: 'uploads/users/default.png' },
+  userImage: { type: String, default: "uploads/users/default.png" },
+  createDate: { type: Date, dafault: Date.now },
 });
 
 module.exports = mongoose.model("Users", userSchema);
