@@ -9,11 +9,10 @@ const {
   deleteUserById,
 } = require("../controllers/users.controller");
 
-
 router.get("/", getAllUsers);
 router.get("/:id", getUserById);
 router.post("/", userUpload.single("userImage"), createUser);
-router.put("/:id", updateUserById);
+router.put("/:id", userUpload.single("userImage"), updateUserById);
 router.delete("/:id", deleteUserById);
 
 module.exports = router;

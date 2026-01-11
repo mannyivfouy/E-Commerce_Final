@@ -8,10 +8,11 @@ function fileFilter(req, file, cb) {
   if (allowTypes.includes(file.mimetype)) {
     cb(null, true);
   } else {
-    cb(
-      new Error("Invalid File Type. Only jpeg, jpg And png Are Allowed"),
-      false
+    const err = new Error(
+      "Invalid File Type. Only jpeg, jpg And png Are Allowed"
     );
+    err.status = 400;
+    cb(err, false);
   }
 }
 

@@ -29,6 +29,18 @@ app.use("/api/users", users);
 app.use("/uploads", express.static("uploads"));
 //!
 
+//! Error Handling Middleware
+app.use((err, req, res, next) => {
+  if (err) {
+    res.status(err.status || 500).json({      
+      message: err.message,
+    });
+  } else {
+    next();
+  }
+});
+
+
 app.listen(PORT, () => {
   console.log(`🚀 Server Running At ===> http://localhost:${PORT}`);
 });
