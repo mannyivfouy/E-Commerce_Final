@@ -90,14 +90,15 @@ exports.deleteUserById = async (req, res) => {
     if (!user) {
       res.status(404).json({ message: "User Not Found" });
     }
+    await Users.findByIdAndDelete(id);
+    res.status(200).json({ message: "User Deleted Successfully", user });
+    
     if (user.userImage !== "/uploads/users/default.png") {
       const imagePath = path.join(__dirname, "..", user.userImage);
 
       fs.unlink(imagePath, (err) => {
         if (err) console.error("Failed To Delete Image", err);
       });
-      await Users.findByIdAndDelete(id);
-      res.status(200).json({ message: "User Deleted Successfully", user });
     }
   } catch (err) {
     res.status(500).json({ message: err.message });

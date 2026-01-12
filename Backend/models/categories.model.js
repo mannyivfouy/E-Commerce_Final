@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 
 const categorySchema = new mongoose.Schema({
-  categoryName: { type: String, require: true },
-  description: { type: String, require: true },
-  status: { type: Boolean, require: true },
+  categoryName: { type: String, required: true },
+  description: { type: String, required: true },
+  status: { type: Boolean, required: true },
   createDate: { type: Date, default: Date.now },
 });
 

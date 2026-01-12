@@ -1,4 +1,5 @@
 const Categories = require("../models/categories.model");
+const Products = require("../models/products.model");
 
 exports.getAllCategories = async (req, res) => {
   try {
@@ -48,9 +49,17 @@ exports.updateCategoryById = async (req, res) => {
     }
     category.categoryName = req.body.categoryName || category.categoryName;
     category.description = req.body.description || category.description;
-    category.status = req.body.status || category.status;
+    category.status = req.body.status ?? category.status;
 
     await category.save();
+
+    if (category.status === false) {
+      await Products.updateMany({ category: category._id }, { status: false });
+    }
+
+    if (category.status === true) {
+      await Products.updateMany({ category: category._id }, { status: true });
+    }
     res
       .status(200)
       .json({ message: "Category Updated Successfully", category });

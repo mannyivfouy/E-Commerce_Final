@@ -8,6 +8,7 @@ const PORT = process.env.PORT || 5000;
 const allowedOrigins = ["http://localhost:4200"];
 const users = require("./routes/users.routes");
 const categories = require("./routes/categories.routes");
+const products = require("./routes/products.routes");
 
 connectDB();
 app.use(express.json());
@@ -27,6 +28,7 @@ app.get("/", (req, res) => {
 //! Routes
 app.use("/api/users", users);
 app.use("/api/categories", categories);
+app.use("/api/products", products);
 
 //! Upload Middleware
 app.use("/uploads", express.static("uploads"));
