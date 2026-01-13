@@ -1,19 +1,21 @@
 <div class="d-flex justify-content-center align-items-center vh-100 bg-light">
   <div class="auth-card shadow" [class.register-mode]="!isLogin">
     <!-- Left Side -->
-    <div class="panel image-panel d-flex justify-content-center align-items-center">
-      <img src="assets/profile.png" alt="image">
+    <div
+      class="panel image-panel d-flex justify-content-center align-items-center"
+    >
+      <img src="assets/profile.png" alt="image" />
     </div>
 
     <!-- Right Side -->
     <div class="panel form-panel">
       <!-- Login -->
-      <div class="form-content login-content">
+      <div class="form-content login-content" *ngIf="isLogin">
         <app-login (switchForm)="toggle()"></app-login>
       </div>
 
       <!-- Register -->
-      <div class="form-content register-content">
+      <div class="form-content register-content" *ngIf="!isLogin">
         <app-register (switchForm)="toggle()"></app-register>
       </div>
     </div>

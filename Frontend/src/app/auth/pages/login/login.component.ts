@@ -1,16 +1,27 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../api/auth.service';
+import { PasswordToggleHelper } from '../../../helper/password-toggle.helper';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
-  imports: [],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
   @Output() switchForm = new EventEmitter<void>();
+
+  password: string = '';
+  passwordToggle = new PasswordToggleHelper();
 
   loginForm!: FormGroup;
   loading = false;
@@ -34,10 +45,20 @@ export class LoginComponent {
     }
 
     this.loading = true;
-    const { username, password } = this.loginForm.value;
+    this.errorMessage = '';
+    const payload = this.loginForm.value;
 
-    // this.authService.login(username, password).subscribe({
-
-    // })
+    this.authService.login(payload).subscribe({
+      next: (res: any) => {
+        localStorage.setItem('token', res.token);
+        this.router.navigate(['/dashboard']);
+      },
+      error: (err) => {
+        this.errorMessage = err.error?.message || 'Login failed';
+      },
+      complete: () => {
+        this.loading = false;
+      },
+    });
   }
 }
