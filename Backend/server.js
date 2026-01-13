@@ -6,6 +6,7 @@ const connectDB = require("./configs/db");
 const PORT = process.env.PORT || 5000;
 
 const allowedOrigins = ["http://localhost:4200"];
+const auth = require("./routes/auth.routes");
 const users = require("./routes/users.routes");
 const categories = require("./routes/categories.routes");
 const products = require("./routes/products.routes");
@@ -26,6 +27,7 @@ app.get("/", (req, res) => {
 });
 
 //! Routes
+app.use("/api/auth", auth);
 app.use("/api/users", users);
 app.use("/api/categories", categories);
 app.use("/api/products", products);
