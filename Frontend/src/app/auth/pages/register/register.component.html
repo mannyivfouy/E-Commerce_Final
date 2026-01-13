@@ -1,1 +1,45 @@
-<p>register works!</p>
+<h3 class="text-center mt-4 mb-5">Register</h3>
+<form action="">
+  <div class="floating-outline mb-3">
+    <i
+      class="bi bi-person-vcard-fill position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"
+    ></i>
+    <input type="text" class="form-control ps-5" id="fullname" placeholder="" />
+    <label for="fullname">Fullname</label>
+  </div>
+
+  <div class="floating-outline mb-4">
+    <i
+      class="bi bi-person-fill position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"
+    ></i>
+    <input
+      type="text"
+      class="form-control ps-5"
+      id="username"
+      placeholder=" "
+    />
+    <label for="username">Username</label>
+  </div>
+
+  <div class="floating-outline mb-4">
+    <i
+      class="bi bi-lock-fill position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"
+    ></i>
+    <input
+      type="password"
+      class="form-control ps-5"
+      id="password"
+      placeholder=" "
+    />
+    <label for="password">Password</label>
+  </div>
+
+  <button class="btn btn-primary w-100">Register</button>
+</form>
+<!-- Login Button -->
+<div class="mt-3 d-flex justify-content-center">
+  <span class="small" (click)="switchForm.emit()">
+    Have an account?
+    <span class="text-primary fw-bold" style="cursor: pointer">Login</span>
+  </span>
+</div>

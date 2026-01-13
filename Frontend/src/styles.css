@@ -1,4 +1,31 @@
-/* You can add global styles to this file, and also import other style files */
 * {
   font-family: "Poppins";
 }
+
+/* Input Form Style */
+
+.floating-outline {
+  position: relative;
+}
+
+.floating-outline label {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  background: white;
+  padding: 0 4px;
+  color: #6c757d;
+  font-size: 1rem;
+  transform: translateY(-50%);
+  pointer-events: none;
+  transition: all 0.2s ease;
+}
+
+/* when focused or has value */
+.floating-outline input:focus + label,
+.floating-outline input:not(:placeholder-shown) + label {
+  top: 0;
+  font-size: 0.75rem;
+  color: #0d6efd;
+}
+
