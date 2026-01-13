@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { PasswordToggleHelper } from '../../../helper/password-toggle.helper';
 import {
   FormBuilder,
@@ -17,7 +17,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
   @Output() switchForm = new EventEmitter<void>();
 
   password: string = '';
@@ -26,6 +26,7 @@ export class RegisterComponent {
   registerForm!: FormGroup;
   loading = false;
   errorMessage = '';
+  usernameExists = false;
 
   constructor(
     private fb: FormBuilder,
@@ -37,6 +38,16 @@ export class RegisterComponent {
       username: ['', Validators.required],
       email: ['', Validators.required],
       password: ['', Validators.required],
+    });
+  }
+
+  ngOnInit(): void {
+    this.registerForm.get('username')?.valueChanges.subscribe(() => {
+      this.usernameExists = false;
+      const control = this.registerForm.get('username');
+      if (control?.hasError('exists')) {
+        control.setErrors(null);
+      }
     });
   }
 
@@ -52,10 +63,15 @@ export class RegisterComponent {
 
     this.authService.register(payload).subscribe({
       next: (res: any) => {
-        this.router.navigate(['/']);
+        this.router.navigate(['/dashboard']);
       },
       error: (err) => {
-        this.errorMessage = err.error?.message || 'Register Failed';
+        if (err.error?.message === 'Username Already Exists') {
+          this.usernameExists = true;
+          this.registerForm.get('username')?.setErrors({ exists: true });
+        } else {
+          this.errorMessage = err.error?.message || 'Register Failed';
+        }
       },
       complete: () => {
         this.loading = false;

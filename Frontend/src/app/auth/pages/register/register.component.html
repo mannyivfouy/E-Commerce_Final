@@ -40,12 +40,18 @@
   <span
     class="text-danger small"
     *ngIf="
-      registerForm.get('username')?.invalid &&
+      registerForm.get('username')?.hasError('required') &&
       (registerForm.get('username')?.touched ||
         registerForm.get('username')?.dirty)
     "
   >
     Username is required
+  </span>
+  <span
+    class="text-danger small"
+    *ngIf="registerForm.get('username')?.hasError('exists')"
+  >
+    Username already exists! Try another username
   </span>
 
   <div class="floating-outline mb-1 mt-3">
