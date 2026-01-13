@@ -46,17 +46,23 @@ export class LoginComponent {
 
     this.loading = true;
     this.errorMessage = '';
-    const payload = this.loginForm.value;
+    const { username, password } = this.loginForm.value;
 
-    this.authService.login(payload).subscribe({
-      next: (res: any) => {        
+    this.authService.login({ username, password }).subscribe({
+      next: (res: any) => {
+        const imagePath = `http://localhost:5000${res.user.userImage}`;
+        localStorage.setItem('userId', res.user.id);
+        localStorage.setItem('imageUrl', imagePath);
+        localStorage.setItem('username', res.user.username);
+        localStorage.setItem('role', res.user.role);
+
+        this.loading = false;
         this.router.navigate(['/dashboard']);
       },
       error: (err) => {
-        this.errorMessage = err.error?.message || 'Login Failed';
-      },
-      complete: () => {
         this.loading = false;
+        this.errorMessage =
+          err?.error?.message || 'Invalid Username or Password';
       },
     });
   }

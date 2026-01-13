@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema({
   address: { type: String, default: null },
   email: { type: String, require: true },
   phone: { type: String, default: null },
-  role: { type: String, default: null },
+  role: { type: String, default: 'User' },
   userImage: { type: String, default: "/uploads/users/default.png" },
   createDate: { type: Date, dafault: Date.now },
 });

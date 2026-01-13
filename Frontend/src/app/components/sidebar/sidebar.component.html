@@ -1,1 +1,97 @@
-<p>sidebar works!</p>
+<nav
+  class="d-flex flex-column bg-dark text-white p-3 vh-100"
+  style="width: 300px"
+>
+  <div
+    class="d-flex align-items-center justify-content-center mb-4 flex-column"
+  >
+    <img
+      src="assets/images/logo.png"
+      alt="Logo"
+      class="img-fluid"
+      style="object-fit: cover"
+      width="70px"
+    />
+  </div>
+
+  <ul class="nav nav-pills flex-column mb-auto">
+    <li class="nav-item mb-2">
+      <a
+        routerLink="/dashboard"
+        routerLinkActive="active"
+        class="nav-link text-white"
+      >
+        <i class="bi bi-speedometer me-2"></i> Dashboard
+      </a>
+    </li>
+    <!-- <li class="nav-item mb-2" *ngIf="isAdmin(); else noHighlightUser">
+      <a
+        routerLink="/user"
+        routerLinkActive="active"
+        class="nav-link text-white"
+      >
+        <i class="bi bi-people-fill me-2"></i> Users
+      </a>
+    </li> -->
+    <li class="nav-item mb-2">
+      <a
+        routerLink="/user"
+        [routerLinkActive]="isAdmin() ? 'active' : ''"
+        class="nav-link text-white"
+      >
+        <i class="bi bi-people-fill me-2"></i> Users
+      </a>
+    </li>
+    <li class="nav-item mb-2">
+      <a
+        routerLink="/member"
+        routerLinkActive="active"
+        class="nav-link text-white"
+      >
+        <i class="bi bi-person-fill me-2"></i> Members
+      </a>
+    </li>
+    <li class="nav-item mb-2">
+      <a
+        routerLink="/product"
+        routerLinkActive="active"
+        class="nav-link text-white"
+      >
+        <i class="bi bi-book-fill me-2"></i> Books
+      </a>
+    </li>
+    <li class="nav-item mb-2">
+      <a
+        routerLink="/category"
+        routerLinkActive="active"
+        class="nav-link text-white"
+      >
+        <i class="bi bi-tags-fill me-2"></i> Categories
+      </a>
+    </li>
+    <li class="nav-item mb-2">
+      <a
+        routerLink="/stock"
+        routerLinkActive="active"
+        class="nav-link text-white"
+      >
+        <i class="bi bi-box-seam-fill me-2"></i> Stocks
+      </a>
+    </li>
+    <li class="nav-item mb-2">
+      <a
+        routerLink="/report"
+        routerLinkActive="active"
+        class="nav-link text-white"
+      >
+        <i class="bi bi-graph-up me-2"></i> Reports
+      </a>
+    </li>
+  </ul>
+
+  <div class="mt-auto">
+    <!-- <button class="btn btn-danger w-100" (click)="logout()">
+      <i class="bi bi-box-arrow-right me-2"></i> Logout
+    </button> -->
+  </div>
+</nav>
