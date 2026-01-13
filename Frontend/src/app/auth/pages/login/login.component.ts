@@ -49,12 +49,11 @@ export class LoginComponent {
     const payload = this.loginForm.value;
 
     this.authService.login(payload).subscribe({
-      next: (res: any) => {
-        localStorage.setItem('token', res.token);
+      next: (res: any) => {        
         this.router.navigate(['/dashboard']);
       },
       error: (err) => {
-        this.errorMessage = err.error?.message || 'Login failed';
+        this.errorMessage = err.error?.message || 'Login Failed';
       },
       complete: () => {
         this.loading = false;

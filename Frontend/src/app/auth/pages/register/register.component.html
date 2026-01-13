@@ -1,48 +1,115 @@
 <h3 class="text-center mt-4 mb-5">Register</h3>
-<form action="">
-  <div class="floating-outline mb-3">
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+  <div class="floating-outline mb-1">
     <i
       class="bi bi-person-vcard-fill position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"
     ></i>
-    <input type="text" class="form-control ps-5" id="fullname" placeholder="" />
+    <input
+      type="text"
+      name="fullname"
+      class="form-control ps-5"
+      placeholder=""
+      formControlName="fullname"
+    />
     <label for="fullname">Fullname</label>
   </div>
+  <span
+    class="text-danger small"
+    *ngIf="
+      registerForm.get('fullname')?.invalid &&
+      (registerForm.get('fullname')?.touched ||
+        registerForm.get('fullname')?.dirty)
+    "
+  >
+    Fullname is required
+  </span>
 
-  <div class="floating-outline mb-4">
+  <div class="floating-outline mb-1 mt-3">
     <i
       class="bi bi-person-fill position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"
     ></i>
     <input
       type="text"
+      name="username"
       class="form-control ps-5"
-      id="username"
       placeholder=" "
+      formControlName="username"
     />
     <label for="username">Username</label>
   </div>
+  <span
+    class="text-danger small"
+    *ngIf="
+      registerForm.get('username')?.invalid &&
+      (registerForm.get('username')?.touched ||
+        registerForm.get('username')?.dirty)
+    "
+  >
+    Username is required
+  </span>
 
-  <div class="floating-outline mb-4">
+  <div class="floating-outline mb-1 mt-3">
     <i
       class="bi bi-envelope-fill position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"
     ></i>
-    <input type="email" class="form-control ps-5" id="email" placeholder=" " />
+    <input
+      type="email"
+      name="email"
+      class="form-control ps-5"
+      placeholder=" "
+      formControlName="email"
+    />
     <label for="email">Email</label>
   </div>
+  <span
+    class="text-danger small"
+    *ngIf="
+      registerForm.get('email')?.invalid &&
+      (registerForm.get('email')?.touched || registerForm.get('email')?.dirty)
+    "
+  >
+    Email is required
+  </span>
 
-  <div class="floating-outline mb-4">
+  <div class="floating-outline mt-3 mb-1">
     <i
       class="bi bi-lock-fill position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"
     ></i>
     <input
-      type="password"
+      [type]="passwordToggle.getType()"
+      name="password"
       class="form-control ps-5"
-      id="password"
       placeholder=" "
+      formControlName="password"
     />
     <label for="password">Password</label>
-  </div>
 
-  <button class="btn btn-primary w-100">Register</button>
+    <button
+      type="button"
+      class="btn btn-sm position-absolute top-50 end-0 translate-middle-y me-2 text-muted"
+      (click)="passwordToggle.toggle()"
+      style="border: none; background: transparent"
+    >
+      <i
+        class="bi"
+        [ngClass]="
+          passwordToggle.showPassword ? 'bi-eye-slash-fill' : 'bi-eye-fill'
+        "
+      ></i>
+    </button>
+  </div>
+  <span
+    class="text-danger small"
+    *ngIf="
+      registerForm.get('password')?.invalid &&
+      (registerForm.get('password')?.touched ||
+        registerForm.get('password')?.dirty)
+    "
+  >
+    Password is required
+  </span>
+
+  <button class="btn btn-primary w-100 mt-3">Register</button>
 </form>
 <!-- Login Button -->
 <div class="mt-3 d-flex justify-content-center">
