@@ -20,7 +20,7 @@ export class AuthService {
         // Save user info to localStorage
         localStorage.setItem('userId', res.user.id);
         localStorage.setItem('username', res.user.username);
-        localStorage.setItem('role', res.user.role || 'user');
+        localStorage.setItem('role', res.user.role || 'User');
         localStorage.setItem('imageUrl', imagePath);
       })
     );

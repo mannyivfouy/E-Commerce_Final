@@ -50,14 +50,13 @@ export class LoginComponent {
 
     this.authService.login({ username, password }).subscribe({
       next: (res: any) => {
-        const imagePath = `http://localhost:5000${res.user.userImage}`;
-        localStorage.setItem('userId', res.user.id);
-        localStorage.setItem('imageUrl', imagePath);
-        localStorage.setItem('username', res.user.username);
-        localStorage.setItem('role', res.user.role);
+        const role = localStorage.getItem('role');
 
-        this.loading = false;
-        this.router.navigate(['/dashboard']);
+        if (role === 'Administrator') {
+          this.router.navigate(['/admin/dashboard']);
+        } else if (role === 'User') {
+          this.router.navigate(['/user/store'])
+        }       
       },
       error: (err) => {
         this.loading = false;

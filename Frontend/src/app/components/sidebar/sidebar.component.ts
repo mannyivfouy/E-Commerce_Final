@@ -24,6 +24,6 @@ export class SidebarComponent {
     localStorage.removeItem('role');
     localStorage.removeItem('imageUrl');
 
-    this.router.navigate(['/login']);
+    this.router.navigate(['/auth']);
   }
 }

@@ -63,7 +63,7 @@ export class RegisterComponent implements OnInit {
 
     this.authService.register(payload).subscribe({
       next: (res: any) => {
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/user/store']);
       },
       error: (err) => {
         if (err.error?.message === 'Username Already Exists') {
