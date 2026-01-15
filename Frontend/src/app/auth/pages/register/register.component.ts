@@ -42,17 +42,16 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.registerForm.get('username')?.valueChanges.subscribe(() => {
-      this.usernameExists = false;
-      const control = this.registerForm.get('username');
-      if (control?.hasError('exists')) {
-        control.setErrors(null);
-        control.updateValueAndValidity({ onlySelf: true });
-      }
-    });
+
   }
 
   onSubmit() {
+    // This is optional, but good practice: clear old 'exists' error on new submission
+    const usernameControl = this.registerForm.get('username');
+    if (usernameControl?.hasError('exists')) {
+      usernameControl.setErrors(null);
+    }
+
     if (this.registerForm.invalid) {
       this.registerForm.markAllAsTouched();
       return;
@@ -64,13 +63,11 @@ export class RegisterComponent implements OnInit {
 
     this.authService.register(payload).subscribe({
       next: (res: any) => {
+        // ... (your existing success logic)
         this.loading = false;
-
-        // Save role in localStorage so RoleGuard allows navigation
         localStorage.setItem('role', 'User');
         localStorage.setItem('userId', res.user.id);
         localStorage.setItem('username', res.user.username);
-        // Optional: save image if returned
         const imagePath = res.user.userImage
           ? `http://localhost:5000${res.user.userImage}`
           : 'assets/profile.png';
@@ -79,24 +76,15 @@ export class RegisterComponent implements OnInit {
       },
       error: (err) => {
         this.loading = false;
+        // This 'err.error' part is crucial for reading the JSON body of a 400 response
+        const serverMessage = err.error?.message || 'Registration Failed';
 
-        // Safe error extraction
-        const serverMessage = (
-          err.error?.message ||
-          err.error ||
-          ''
-        ).toString();
-
-        if (serverMessage.trim().toLowerCase() === 'username already exists') {
-          this.usernameExists = true;
-
-          const control = this.registerForm.get('username');
-          control?.setErrors({ exists: true });
-          control?.markAsTouched();
-          control?.markAsDirty();
-          control?.updateValueAndValidity({ onlySelf: true });
+        // This condition now matches your backend's exact response
+        if (serverMessage === 'Username Already Exists') {
+          this.registerForm.get('username')?.setErrors({ exists: true });
         } else {
-          this.errorMessage = serverMessage || 'Register Failed';
+          // Display any other errors from the server
+          this.errorMessage = serverMessage;
         }
       },
     });

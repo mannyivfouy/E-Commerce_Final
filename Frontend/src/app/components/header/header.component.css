@@ -9,12 +9,3 @@
   object-fit: cover;
   border: 2px solid #ccc;
 }
-
-.dropdown-toggle::after {
-  margin-left: 0.5rem; /* optional spacing for the arrow */
-}
-
-.dropdown-toggle .small {
-  font-size: 0.75rem;
-  line-height: 1;
-}
