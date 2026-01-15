@@ -8,26 +8,39 @@ export class RoleGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot): boolean {
     const expectedRole = route.data['role'];
-    const userRole = localStorage.getItem('role');
+    const userRole = localStorage.getItem('role')?.toLowerCase();
     const userId = localStorage.getItem('userId');
 
     // Not logged in
     if (!userId || !userRole) {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/auth']);
       return false;
     }
 
-    // Wrong role
-    if (userRole !== expectedRole) {
-      // Redirect user to their correct panel
-      if (userRole === 'Administrator') {
-        this.router.navigate(['/admin']);
-      } else if (userRole === 'User') {
-        this.router.navigate(['/store']);
+    // Allow multiple roles for shared pages
+    if (Array.isArray(expectedRole)) {
+      const allowedRoles = expectedRole.map((r) => r.toLowerCase());
+      if (!allowedRoles.includes(userRole)) {
+        this.redirectUser(userRole); // ✅ this is inside the class
+        return false;
       }
-      return false;
+    } else {
+      if (userRole !== expectedRole.toLowerCase()) {
+        this.redirectUser(userRole); // ✅ this is inside the class
+        return false;
+      }
     }
 
     return true;
+  }
+  
+  private redirectUser(userRole: string) {
+    if (userRole === 'admin' || userRole === 'administrator') {
+      this.router.navigate(['/admin/dashboard']);
+    } else if (userRole === 'user') {
+      this.router.navigate(['/store']);
+    } else {
+      this.router.navigate(['/auth']);
+    }
   }
 }

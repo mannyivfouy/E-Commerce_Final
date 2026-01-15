@@ -10,8 +10,8 @@ import { CategoryListComponent } from './features/admin/pages/categories/categor
 import { CategoryFormComponent } from './features/admin/pages/categories/category-form/category-form.component';
 import { RoleGuard } from './guards/role.guard';
 import { StoreComponent } from './features/client/pages/store/store.component';
-import { ProfileComponent } from './features/client/pages/profile/profile.component';
 import { StoreLayoutComponent } from './layouts/store-layout/store-layout.component';
+import { ProfileComponent } from './shared/profile/profile.component';
 
 export const routes: Routes = [
   {
@@ -86,6 +86,14 @@ export const routes: Routes = [
       },
     ],
   },
+  //! Shared
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    canActivate: [RoleGuard],
+    data: { role: ['Administrator', 'User'] },
+  },
+  //!
   {
     path: 'user',
     component: StoreLayoutComponent,
@@ -96,14 +104,6 @@ export const routes: Routes = [
         path: 'store',
         component: StoreComponent,
       },
-      {
-        path: 'profile',
-        component: ProfileComponent,
-      },
     ],
-  },
-  {
-    path: '**',
-    redirectTo: ' ',
   },
 ];

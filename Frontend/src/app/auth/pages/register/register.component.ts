@@ -47,6 +47,7 @@ export class RegisterComponent implements OnInit {
       const control = this.registerForm.get('username');
       if (control?.hasError('exists')) {
         control.setErrors(null);
+        control.updateValueAndValidity({ onlySelf: true });
       }
     });
   }
@@ -63,18 +64,40 @@ export class RegisterComponent implements OnInit {
 
     this.authService.register(payload).subscribe({
       next: (res: any) => {
+        this.loading = false;
+
+        // Save role in localStorage so RoleGuard allows navigation
+        localStorage.setItem('role', 'User');
+        localStorage.setItem('userId', res.user.id);
+        localStorage.setItem('username', res.user.username);
+        // Optional: save image if returned
+        const imagePath = res.user.userImage
+          ? `http://localhost:5000${res.user.userImage}`
+          : 'assets/profile.png';
+        localStorage.setItem('imageUrl', imagePath);
         this.router.navigate(['/user/store']);
       },
       error: (err) => {
-        if (err.error?.message === 'Username Already Exists') {
-          this.usernameExists = true;
-          this.registerForm.get('username')?.setErrors({ exists: true });
-        } else {
-          this.errorMessage = err.error?.message || 'Register Failed';
-        }
-      },
-      complete: () => {
         this.loading = false;
+
+        // Safe error extraction
+        const serverMessage = (
+          err.error?.message ||
+          err.error ||
+          ''
+        ).toString();
+
+        if (serverMessage.trim().toLowerCase() === 'username already exists') {
+          this.usernameExists = true;
+
+          const control = this.registerForm.get('username');
+          control?.setErrors({ exists: true });
+          control?.markAsTouched();
+          control?.markAsDirty();
+          control?.updateValueAndValidity({ onlySelf: true });
+        } else {
+          this.errorMessage = serverMessage || 'Register Failed';
+        }
       },
     });
   }
