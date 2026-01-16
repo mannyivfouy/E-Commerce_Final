@@ -34,6 +34,7 @@ exports.createUser = async (req, res) => {
       username: req.body.username,
       password: req.body.password,
       dateOfBirth: req.body.dateOfBirth,
+      gender: req.body.gender,
       address: req.body.address,
       email: req.body.email,
       phone: req.body.phone,
@@ -70,6 +71,7 @@ exports.updateUserById = async (req, res) => {
     user.username = req.body.username || user.username;
     user.password = req.body.password || user.password;
     user.dateOfBirth = req.body.dateOfBirth || user.dateOfBirth;
+    user.gender = req.body.gender || user.gender;
     user.address = req.body.address || user.address;
     user.email = req.body.email || user.email;
     user.phone = req.body.phone || user.phone;
@@ -92,7 +94,7 @@ exports.deleteUserById = async (req, res) => {
     }
     await Users.findByIdAndDelete(id);
     res.status(200).json({ message: "User Deleted Successfully", user });
-    
+
     if (user.userImage !== "/uploads/users/default.png") {
       const imagePath = path.join(__dirname, "..", user.userImage);
 
