@@ -1,0 +1,33 @@
+.no {
+  width: 40px;
+}
+.avatar {
+  width: 100px;
+}
+.fullname {
+  width: 220px;
+}
+.username {
+  width: 220px;
+}
+.gender {
+  width: 100px;
+}
+.dob {
+  width: 150px;
+}
+.email {
+  width: 200px;
+}
+.phone {
+  width: 150px;
+}
+.address {
+  width: 320px;
+}
+.role {
+  width: 180px;
+}
+.action {
+  width: 250px;
+}

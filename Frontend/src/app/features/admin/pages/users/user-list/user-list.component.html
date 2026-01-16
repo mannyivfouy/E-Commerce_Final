@@ -1,1 +1,99 @@
-<p>user-list works!</p>
+<div
+  class="container-fluid d-flex flex-column"
+  style="width: 100%; height: 100%"
+>
+  <div class="row">
+    <h3 class="p-0">All Users List</h3>
+  </div>
+
+  <div class="row">
+    <div class="col-3 p-0">
+      <form action="">
+        <div class="floating-outline">
+          <i
+            class="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"
+          ></i>
+          <input
+            type="search"
+            id="search"
+            (input)="onSearch($event)"
+            aria-label="Search by username"
+            class="form-control ps-5"
+            placeholder=" "
+          />
+          <label for="search">Search User By Username or Fullname</label>
+        </div>
+      </form>
+    </div>
+    <div class="col-9 p-0 d-flex justify-content-end">
+      <button class="btn btn-primary" routerLink="/admin/user/createUser">
+        <i class="bi bi-person-plus-fill me-1"></i>
+        Add New User
+      </button>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <table class="table table-striped table-bordered align-middle text-center">
+      <thead class="table-dark">
+        <tr>
+          <th class="no">No</th>
+          <th class="avatar">Avatar</th>
+          <th class="fullname">Fullname</th>
+          <th class="username">Username</th>
+          <!-- <th class="gender">Gender</th> -->
+          <th class="dob">Date of Birth</th>
+          <th class="email">Email</th>
+          <th class="phone">Phone</th>
+          <th class="address">Address</th>
+          <th class="role">Role</th>
+          <th class="action">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of paginatedUsers; let i = index">
+          <td>{{ (currentPage - 1) * itemsPerPage + i + 1 }}</td>
+          <td>
+            <img
+              [src]="
+                user.userImage
+                  ? 'http://localhost:5000' + user.userImage
+                  : 'http://localhost:5000' + '/uploads/users/default.png'
+              "
+              alt="Avatar"
+              width="50"
+              height="50"
+              class="rounded-circle"
+              style="object-fit: cover"
+              (error)="
+                user.userImage =
+                  'http://localhost:5000/uploads/users/default.png'
+              "
+            />
+          </td>
+          <td>{{ user.fullname }}</td>
+          <td>{{ user.username }}</td>
+          <!-- <td>{{ user.gender }}</td> -->
+          <td>{{ user.dateOfBirth }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.phone }}</td>
+          <td>{{ user.address }}</td>
+          <td>{{ user.role }}</td>
+          <td>
+            <button class="btn btn-warning"></button>
+            <button class="btn btn-danger"></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination -->
+  <div class="d-flex justify-content-center mt-auto">
+    <app-pagination
+      [currentPage]="currentPage"
+      [totalPages]="totalPages"
+      (pageChange)="onPageChange($event)"
+    ></app-pagination>
+  </div>
+</div>
